@@ -1,0 +1,51 @@
+{% set name = "azure-mgmt-servicefabric" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/azure-mgmt-servicefabric-{{ version }}.tar.gz
+  sha256: a08433049554436c90844bc8a96820e883699484e6ffc99032fd2571f8c5f7d6
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<37]
+
+requirements:
+  host:
+    - setuptools
+    - wheel
+    - python
+    - pip
+  run:
+    - python
+    - isodate >=0.6.1,<1.0.0
+    - azure-common >=1.1,<2
+    - azure-mgmt-core >=1.3.2,<2.0.0
+    - typing_extensions >=4.3.0  # [py<38]
+
+tests:
+  imports:
+    - azure.mgmt.servicefabric
+    - azure.mgmt.servicefabric.aio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python
+  summary: Microsoft Azure Service Fabric Management Client Library for Python
+  license: MIT
+  license_file: LICENSE
+  license_family: MIT
+  description: Microsoft Azure Service Fabric Management Client Library for Python
+  dev_url: https://github.com/Azure/azure-sdk-for-python
+  doc_url: https://github.com/Azure/azure-sdk-for-python
+
+extra:
+  recipe-maintainers:
+    - janjagusch
